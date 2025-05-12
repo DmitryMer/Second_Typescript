@@ -15,7 +15,6 @@ export function Menu() {
   const getMenu = async () => {
     try {
       setIsLoading(true);
-
       const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
       setProducts(data);
       setIsLoading(false);
