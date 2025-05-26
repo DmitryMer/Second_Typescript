@@ -6,11 +6,23 @@ import avatar from "../../public/avatar.png";
 import exit from "../../public/exit-icon.svg";
 import Button from "../../components/Button/Button";
 import cn from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { getProfile, userActions } from "../../store/user.slice";
+import { useEffect } from "react";
+import { RootState } from "@reduxjs/toolkit/query";
 
 export function Layout() {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const profile = useSelector((s: RootState) => s.user.profile);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
+
   const logout = () => {
-    localStorage.removeItem("jwt");
+    dispatch(userActions.logout());
     navigate("/auth/login");
   };
   return (
@@ -22,8 +34,8 @@ export function Layout() {
             src={avatar}
             alt="аватар пользователя"
           />
-          <div className={styles["name"]}>Антон Ларичев</div>
-          <div className={styles["email"]}>alar@mail.ru</div>
+          <div className={styles["name"]}>{profile?.name}</div>
+          <div className={styles["email"]}>{profile?.email}</div>
         </div>
         <div className={styles["menu"]}>
           <NavLink
