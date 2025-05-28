@@ -34,6 +34,13 @@ export function Cart() {
         }
         return <CartItem key={product.id} count={i.count} {...product} />;
       })}
+      <div>
+        <div>Итог</div>
+      </div>
+      <hr />
+      <div></div>
+      <hr />
+      <div>Итог {items.length}</div>
     </>
   );
 }
